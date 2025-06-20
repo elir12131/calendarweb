@@ -1,0 +1,90 @@
+/* static/css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap');
+
+:root {
+    --bg-soft-cream: #FDF8F5;
+    --text-charcoal: #333333;
+    --accent-burgundy: #800020;
+    --accent-gold: #C0A15E;
+    --highlight-rose: #F9EAE5;
+    --border-light-gray: #e0e0e0;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-special: 'Pacifico', cursive;
+}
+
+body { background-color: var(--bg-soft-cream); color: var(--text-charcoal); font-family: var(--font-body); margin: 0; padding: 0 20px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); text-align: center; }
+.main-header h1 { font-size: 2.8rem; margin-bottom: 0.2em; }
+.main-header .subtitle { font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto 2em auto; text-align: center; }
+
+.customization-panel { background: #fff; padding: 2em; margin: 2em auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); max-width: 800px; border-top: 5px solid var(--accent-gold); text-align: center; }
+.zipcode-form { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 1.5em 0; }
+#zipcode-inputs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.zip-input { font-family: var(--font-body); font-size: 1rem; padding: 10px; border: 1px solid var(--border-light-gray); border-radius: 5px; width: 120px; }
+#add-zip-btn { font-size: 1.5rem; font-weight: bold; color: var(--accent-burgundy); background-color: transparent; border: 2px solid var(--accent-burgundy); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; transition: all 0.2s ease; }
+#add-zip-btn:hover { background-color: var(--highlight-rose); }
+
+.button-group { display: flex; justify-content: center; gap: 15px; margin-top: 1.5em; flex-wrap: wrap;}
+.cta-button { background-color: var(--accent-burgundy); color: white; font-family: var(--font-body); font-weight: bold; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; }
+.cta-button:hover { background-color: #600018; }
+.secondary-button { background-color: #fff; color: var(--accent-burgundy); border: 2px solid var(--accent-burgundy); font-family: var(--font-body); font-weight: bold; padding: 13px 28px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; }
+.secondary-button:hover { background-color: var(--highlight-rose); }
+.secondary-button:disabled { background-color: #e0e0e0; border-color: #ccc; color: #888; cursor: not-allowed; }
+
+#calendar-display-area { display: none; }
+#month-header { margin: 2em auto 1em auto; }
+#calendar-container { margin: 0 auto; max-width: 1400px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background-color: var(--border-light-gray); border: 1px solid var(--border-light-gray); }
+.weekday-header { background-color: var(--accent-burgundy); color: white; font-weight: bold; padding: 10px; text-align: center; }
+
+/* Main Day Cell Layout */
+.day-cell {
+    background-color: #fff;
+    min-height: 160px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column; /* Key: single column layout */
+}
+.day-cell.empty { background-color: #f7f7f7; }
+.day-cell.is-shabbat, .day-cell.is-holiday { background-color: var(--highlight-rose); }
+
+.day-header { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; order: 1; }
+.gregorian-day { font-weight: bold; }
+.hebrew-date { font-size: 0.9em; font-weight: 500; }
+
+.events-list {
+    order: 2; /* Positioned after the header */
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--accent-burgundy);
+    text-align: center;
+    line-height: 1.4;
+    padding: 10px 0;
+}
+.sample-birthday { font-family: var(--font-special); color: #1a73e8; font-size: 1.2em; margin-top: 5px;}
+
+/* This spacer pushes the times to the very bottom of the cell */
+.day-spacer { order: 3; flex-grow: 1; }
+
+/* === THIS IS THE CORRECTED LAYOUT FOR THE TIMES === */
+.times-list {
+    order: 4; /* Positioned at the bottom */
+    align-self: flex-end; /* THIS IS THE KEY: Pushes the whole block to the right */
+    width: 95px;          /* THIS IS THE KEY: Sets a fixed width (about 1/4 of a wide cell) */
+    display: flex;
+    flex-direction: column; /* Stacks the times vertically */
+    gap: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.time-item {
+    padding: 4px 6px;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+}
+
+.main-footer { text-align: center; padding: 2em; border-top: 1px solid var(--border-light-gray); margin-top: 3em; }
+.spinner { border: 5px solid #f3f3f3; border-top: 5px solid var(--accent-burgundy); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2em auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

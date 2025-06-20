@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Custom Jewish Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Your Family's Traditions, Beautifully Timed</h1>
+        <p class="subtitle">A custom Jewish calendar with candle lighting and Havdalah times for all your locations.</p>
+    </header>
+
+    <main>
+        <div class="customization-panel">
+            <h2>Create Your Custom Calendar</h2>
+            <p>Enter a US zip code to add local times to the calendar. Click the "+" to add more locations.</p>
+            <div class="zipcode-form">
+                <div id="zipcode-inputs">
+                    <!-- JavaScript will add the initial input field here -->
+                </div>
+                <button id="add-zip-btn" title="Add another location">+</button>
+            </div>
+            <div class="button-group">
+                <button id="update-calendar-btn" class="cta-button">Update Calendar</button>
+                <button id="add-birthday-btn" class="secondary-button">Add Sample Birthday</button>
+                <!-- Purchase button is now here with the updated price -->
+                <button id="add-to-cart-btn" class="cta-button">Purchase & Download PDF - $39.99</button>
+            </div>
+        </div>
+
+        <div id="calendar-display-area">
+             <!-- The month header will be populated by JavaScript -->
+            <h2 id="month-header"></h2>
+            <div id="calendar-container">
+                <!-- Calendar will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Calendar customized just for you.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
