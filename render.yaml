@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: my-custom-calendar # You can change this to your preferred service name
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.4 # Specifies a recent Python version
+      - fromGroup: calendar-secrets # This is the name of our secrets group
