@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You! - Custom Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="main-header">
+        <h1>Thank You For Your Order!</h1>
+        <p class="subtitle">Your custom calendar will be processed and sent to you shortly.</p>
+    </header>
+    <main>
+        <div class="thank-you-container">
+            <i class="fas fa-check-circle thank-you-icon"></i>
+            <p>A confirmation has been sent to your email address.</p>
+            <a href="/" class="cta-button">Back to Home</a>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p><strong>Eli Roitblat</strong></p>
+            <div class="contact-links">
+                <a href="mailto:roitblateli@gmail.com"><i class="fas fa-envelope"></i> roitblateli@gmail.com</a>
+                <a href="tel:9292165491"><i class="fas fa-phone"></i> (929) 216-5491</a>
+                <a href="https://www.instagram.com/eliroitblat" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> @eliroitblat</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -39,15 +39,58 @@ document.addEventListener('DOMContentLoaded', () => {
         weekdays.forEach(day => { const headerCell = document.createElement('div'); headerCell.className = 'weekday-header'; headerCell.textContent = day; grid.appendChild(headerCell); });
         
         const month = calendarData[monthKey];
-        month.weeks.forEach(week => { week.forEach(dayData => { const cell = document.createElement('div'); cell.className = 'day-cell'; if (dayData) { if (dayData.is_shabbat) cell.classList.add('is-shabbat'); if (dayData.is_holiday) cell.classList.add('is-holiday'); const mainContent = document.createElement('div'); mainContent.className = 'day-main-content'; const timesContainer = document.createElement('div'); timesContainer.className = 'day-times-container'; mainContent.innerHTML = `<div class="day-header"><span class="gregorian-day">${dayData.gregorian_day}</span><span class="hebrew-date">${dayData.hebrew_date}</span></div><div class="events-list">${dayData.events.join('<br>')}</div><div class="day-spacer"></div>`; if (dayData.times && dayData.times.length > 0) { dayData.times.sort((a, b) => a.loc.localeCompare(b.loc)); dayData.times.forEach(timeItem => { const timeEl = document.createElement('span'); timeEl.className = 'time-item'; timeEl.style = getLocationStyling(timeItem.loc); const stateAbbr = getStateForZip(timeItem.loc); timeEl.textContent = `${stateAbbr}: ${timeItem.time}`; timesContainer.appendChild(timeEl); }); } cell.appendChild(mainContent); cell.appendChild(timesContainer); } else { cell.classList.add('empty'); } grid.appendChild(cell); }); });
+        month.weeks.forEach(week => { week.forEach(dayData => {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell';
+            if (dayData) {
+                if (dayData.is_shabbat) cell.classList.add('is-shabbat');
+                if (dayData.is_holiday) cell.classList.add('is-holiday');
+                
+                // --- NEW & ROBUST HTML STRUCTURE ---
+                // Create a container for the top content (date and events)
+                const mainContent = document.createElement('div');
+                mainContent.className = 'day-main-content';
+
+                mainContent.innerHTML = `
+                    <div class="day-header">
+                        <span class="gregorian-day">${dayData.gregorian_day}</span>
+                        <span class="hebrew-date">${dayData.hebrew_date}</span>
+                    </div>
+                    <div class="events-list">${dayData.events.join('<br>')}</div>
+                `;
+                cell.appendChild(mainContent);
+
+                // Create a separate container for the times
+                const timesContainer = document.createElement('div');
+                timesContainer.className = 'day-times-container';
+                if (dayData.times && dayData.times.length > 0) {
+                    const timesList = document.createElement('div');
+                    timesList.className = 'times-list';
+                    dayData.times.sort((a, b) => a.loc.localeCompare(b.loc));
+                    dayData.times.forEach(timeItem => {
+                        const timeEl = document.createElement('span');
+                        timeEl.className = 'time-item';
+                        timeEl.style = getLocationStyling(timeItem.loc);
+                        const stateAbbr = getStateForZip(timeItem.loc);
+                        timeEl.textContent = `${stateAbbr}: ${timeItem.time}`;
+                        timesList.appendChild(timeEl);
+                    });
+                    timesContainer.appendChild(timesList);
+                }
+                cell.appendChild(timesContainer);
+
+            } else {
+                cell.classList.add('empty');
+            }
+            grid.appendChild(cell);
+        }); });
         calendarContainer.appendChild(grid);
-        
         setupTopScrollbar();
     }
 
-    async function fetchAndRenderCalendar() { calendarContainer.innerHTML = '<div class="spinner"></div>'; monthHeader.style.display = 'none'; try { let response = await fetch('/api/get-base-calendar'); if (!response.ok) throw new Error('Failed to fetch base calendar'); let calendarData = await response.json(); const zipInputs = document.querySelectorAll('.zip-input'); const zipcodes = [...new Set(Array.from(zipInputs).map(input => input.value.trim()).filter(Boolean))]; const timePromises = zipcodes.map(zip => { const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&zip=${zip}&start=2025-09-01&end=2025-09-30&c=on`; return fetch(url).then(res => { if (!res.ok) return { error: `HTTP error for ${zip}`, items: [] }; return res.json(); }); }); const allTimesData = await Promise.all(timePromises); allTimesData.forEach(zipData => { if (zipData.items && zipData.location && zipData.location.zip) { const location = zipData.location.zip; zipData.items.forEach(item => { if (item.category === 'candles' || item.category === 'havdalah') { const timeObj = new Date(item.date); const timeStr = timeObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); const day = timeObj.getDate(); for (const week of calendarData['2025-09'].weeks) { for (const dayData of week) { if (dayData && dayData.gregorian_day === day) { dayData.times.push({ loc: location, time: timeStr }); } } } } }); } }); renderCalendar(calendarData); } catch (error) { console.error("Failed to fetch calendar data:", error); calendarContainer.innerHTML = `<p style="text-align:center; color:red;">Could not load calendar data. One of the zipcodes may be invalid.</p>`; } }
-    function addZipcodeField(value = '') { const newInput = document.createElement('input'); newInput.type = 'text'; newInput.className = 'zip-input'; newInput.placeholder = 'e.g., 90210'; newInput.setAttribute('maxlength', 5); newInput.value = value; zipInputsContainer.appendChild(newInput); if (!value) newInput.focus(); }
-    function addSampleBirthday() { if (sampleBirthdayCount >= 4) return; const availableLists = Array.from(calendarContainer.querySelectorAll('.day-cell:not(.empty) .events-list')).filter(list => !list.querySelector('.sample-birthday')); if (availableLists.length === 0) return; const randomList = availableLists[Math.floor(Math.random() * availableLists.length)]; const birthdayEl = document.createElement('div'); birthdayEl.className = 'sample-birthday'; birthdayEl.textContent = 'Happy Birthday!'; randomList.appendChild(birthdayEl); sampleBirthdayCount++; if (sampleBirthdayCount >= 4) { addBirthdayBtn.disabled = true; addBirthdayBtn.textContent = "Max Samples Added"; } }
+    async function fetchAndRenderCalendar() { /* ... (this function is unchanged) ... */ calendarContainer.innerHTML = '<div class="spinner"></div>'; monthHeader.style.display = 'none'; try { let response = await fetch('/api/get-base-calendar'); if (!response.ok) throw new Error('Failed to fetch base calendar'); let calendarData = await response.json(); const zipInputs = document.querySelectorAll('.zip-input'); const zipcodes = [...new Set(Array.from(zipInputs).map(input => input.value.trim()).filter(Boolean))]; const timePromises = zipcodes.map(zip => { const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&zip=${zip}&start=2025-09-01&end=2025-09-30&c=on`; return fetch(url).then(res => { if (!res.ok) return { error: `HTTP error for ${zip}`, items: [] }; return res.json(); }); }); const allTimesData = await Promise.all(timePromises); allTimesData.forEach(zipData => { if (zipData.items && zipData.location && zipData.location.zip) { const location = zipData.location.zip; zipData.items.forEach(item => { if (item.category === 'candles' || item.category === 'havdalah') { const timeObj = new Date(item.date); const timeStr = timeObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); const day = timeObj.getDate(); for (const week of calendarData['2025-09'].weeks) { for (const dayData of week) { if (dayData && dayData.gregorian_day === day) { dayData.times.push({ loc: location, time: timeStr }); } } } } }); } }); renderCalendar(calendarData); } catch (error) { console.error("Failed to fetch calendar data:", error); calendarContainer.innerHTML = `<p style="text-align:center; color:red;">Could not load calendar data. One of the zipcodes may be invalid.</p>`; } }
+    function addZipcodeField(value = '') { /* ... (this function is unchanged) ... */ const newInput = document.createElement('input'); newInput.type = 'text'; newInput.className = 'zip-input'; newInput.placeholder = 'e.g., 90210'; newInput.setAttribute('maxlength', 5); newInput.value = value; zipInputsContainer.appendChild(newInput); if (!value) newInput.focus(); }
+    function addSampleBirthday() { /* ... (this function is unchanged) ... */ if (sampleBirthdayCount >= 4) return; const availableLists = Array.from(calendarContainer.querySelectorAll('.day-cell:not(.empty) .events-list')).filter(list => !list.querySelector('.sample-birthday')); if (availableLists.length === 0) return; const randomList = availableLists[Math.floor(Math.random() * availableLists.length)]; const birthdayEl = document.createElement('div'); birthdayEl.className = 'sample-birthday'; birthdayEl.textContent = 'Happy Birthday!'; randomList.appendChild(birthdayEl); sampleBirthdayCount++; if (sampleBirthdayCount >= 4) { addBirthdayBtn.disabled = true; addBirthdayBtn.textContent = "Max Samples Added"; } }
     
     function setupTopScrollbar() {
         if (!scrollWrapper || !topScrollbar || !topScrollbarThumb) return;
@@ -87,11 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         window.addEventListener('resize', syncScroll);
         syncScroll();
-        
-        // NEW: Scroll to the far right (the end) after a short delay to show Saturday first
-        setTimeout(() => {
-            scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
-        }, 100);
+        setTimeout(() => { scrollWrapper.scrollLeft = scrollWrapper.scrollWidth; }, 100);
     }
 
     updateBtn.addEventListener('click', fetchAndRenderCalendar);
