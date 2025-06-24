@@ -9,9 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Add the html2canvas library for taking screenshots -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-
     <header class="main-header">
         <h1>Your Family's Traditions, Beautifully Timed</h1>
         <p class="subtitle">A custom Jewish calendar with candle lighting and Havdalah times for all your locations.</p>
@@ -35,20 +36,21 @@
         </div>
 
         <div id="calendar-display-area">
-            <h2 id="month-header"></h2>
-            
-            <!-- NEW: This is the visible, "dummy" scrollbar that will be at the top -->
-            <div class="top-scrollbar-container">
-                <div class="top-scrollbar-thumb"></div>
-            </div>
-
-            <div class="calendar-scroll-wrapper">
-                <div id="calendar-container">
-                    <!-- JavaScript will render the calendar grid here -->
-                </div>
-            </div>
+            <!-- This container will hold the visible preview calendar -->
+            <div id="calendar-container"></div>
         </div>
     </main>
+
+    <!-- Modal structure for displaying the screenshot -->
+    <div id="image-modal" class="modal-overlay">
+        <button id="modal-close-btn" class="modal-close">×</button>
+        <div id="modal-content" class="modal-content">
+            <!-- The screenshot (<img> tag) will be placed here by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- This is a hidden container for rendering the full-size calendar for the screenshot -->
+    <div id="hidden-render-container"></div>
 
     <footer class="site-footer">
         <div class="footer-content">
