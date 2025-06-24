@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -21,30 +22,43 @@
             <h2>Create Your Custom Calendar</h2>
             <p>Enter a US zip code to add local times to the calendar. Click the "+" to add more locations.</p>
             <div class="zipcode-form">
-                <div id="zipcode-inputs">
-                    <!-- JavaScript will add the initial input field here -->
-                </div>
+                <div id="zipcode-inputs"></div>
                 <button id="add-zip-btn" title="Add another location">+</button>
             </div>
             <div class="button-group">
-                <button id="update-calendar-btn" class="cta-button">Update Calendar</button>
-                <button id="add-birthday-btn" class="secondary-button">Add Sample Birthday</button>
-                <!-- Purchase button is now here with the updated price -->
+                <div class="button-row">
+                    <button id="update-calendar-btn" class="cta-button">Update Calendar</button>
+                    <button id="add-birthday-btn" class="secondary-button">Add Sample Birthday</button>
+                </div>
                 <button id="add-to-cart-btn" class="cta-button">Purchase & Download PDF - $39.99</button>
             </div>
         </div>
 
         <div id="calendar-display-area">
-             <!-- The month header will be populated by JavaScript -->
             <h2 id="month-header"></h2>
-            <div id="calendar-container">
-                <!-- Calendar will be rendered here by JavaScript -->
+            
+            <!-- NEW: This is the visible, "dummy" scrollbar that will be at the top -->
+            <div class="top-scrollbar-container">
+                <div class="top-scrollbar-thumb"></div>
+            </div>
+
+            <div class="calendar-scroll-wrapper">
+                <div id="calendar-container">
+                    <!-- JavaScript will render the calendar grid here -->
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="main-footer">
-        <p>Calendar customized just for you.</p>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p><strong>Eli Roitblat</strong></p>
+            <div class="contact-links">
+                <a href="mailto:roitblateli@gmail.com"><i class="fas fa-envelope"></i> roitblateli@gmail.com</a>
+                <a href="tel:9292165491"><i class="fas fa-phone"></i> (929) 216-5491</a>
+                <a href="https://www.instagram.com/eliroitblat" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> @eliroitblat</a>
+            </div>
+        </div>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

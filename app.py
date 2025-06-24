@@ -6,14 +6,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
+    """This route serves the main calendar page."""
     return render_template('index.html')
+
+@app.route('/checkout')
+def checkout_page():
+    """NEW: This route serves the checkout page."""
+    return render_template('checkout.html')
 
 @app.route('/api/get-base-calendar')
 def get_base_calendar_api():
-    """
-    This endpoint's ONLY job is to return the pre-built base calendar
-    with holidays and dates. It does no processing and makes no network calls.
-    """
+    """This endpoint provides the base calendar data."""
     try:
         base_calendar = calendar_generator.get_base_calendar()
         return jsonify(base_calendar)
