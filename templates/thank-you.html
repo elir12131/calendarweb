@@ -11,17 +11,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
     <header class="main-header">
-        <h1>Thank You For Your Order!</h1>
-        <p class="subtitle">Your custom calendar will be processed and sent to you shortly.</p>
+        <!-- The header can be simpler on this page -->
+        <h1>Order Confirmation</h1>
     </header>
+
     <main>
+        <!-- NEW: A styled container for the thank you message -->
         <div class="thank-you-container">
-            <i class="fas fa-check-circle thank-you-icon"></i>
-            <p>A confirmation has been sent to your email address.</p>
-            <a href="/" class="cta-button">Back to Home</a>
+            <div class="thank-you-icon-wrapper">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Thank You For Your Order!</h2>
+            <p class="confirmation-text">
+                Your custom calendar is being prepared. A confirmation and download link will be sent to the email address you provided shortly.
+            </p>
+            <div class="order-details-summary">
+                <p><strong>Product:</strong> Custom Jewish Calendar (PDF)</p>
+                <p><strong>Total:</strong> $39.99</p>
+            </div>
+            <a href="/" class="cta-button back-home-btn">Back to Home</a>
         </div>
     </main>
+
     <footer class="site-footer">
         <div class="footer-content">
             <p><strong>Eli Roitblat</strong></p>
@@ -32,5 +45,6 @@
             </div>
         </div>
     </footer>
+
 </body>
 </html>
