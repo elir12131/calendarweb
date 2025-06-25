@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+   <!-- NEW: Site Navigation Header -->
+    <nav class="site-nav">
+        <div class="nav-brand">
+            <a href="/">Custom Calendars</a>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/checkout">Checkout</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    </nav>
+
     <header class="main-header">
         <h1>Complete Your Purchase</h1>
         <p class="subtitle">Just a few more details to get your custom calendar.</p>
