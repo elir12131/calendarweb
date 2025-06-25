@@ -21,7 +21,6 @@ h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); te
 .secondary-button:disabled { background-color: #e0e0e0; border-color: #ccc; color: #888; cursor: not-allowed; }
 #calendar-display-area { display: none; margin: 2em auto; max-width: 1400px; }
 #month-header { display: none; }
-#calendar-container { width: 100%; margin: 0 auto; position: relative; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background-color: var(--border-light-gray); border: 1px solid var(--border-light-gray); }
 .weekday-header { background-color: var(--accent-burgundy); color: white; font-weight: bold; padding: 10px; text-align: center; }
 .day-cell { background-color: #fff; min-height: 160px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -55,23 +54,30 @@ h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); te
 .spinner { border: 5px solid #f3f3f3; border-top: 5px solid var(--accent-burgundy); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2em auto; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* This is a hidden container used for rendering the screenshot canvas */
 #hidden-render-container { position: absolute; top: -9999px; left: -9999px; z-index: -1; }
 #hidden-render-container .calendar-grid { width: 1200px; }
-
-/* --- MODAL (POPUP) STYLES --- */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
 .modal-overlay.active { display: flex; }
 .modal-close { position: absolute; top: 10px; right: 15px; font-size: 3rem; color: white; background: none; border: none; cursor: pointer; line-height: 1; z-index: 1002; }
 .modal-zoom-controls { position: relative; z-index: 1002; display: flex; gap: 10px; background-color: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; margin-bottom: 10px; }
 .modal-zoom-controls button { background-color: white; color: black; border: 1px solid #ccc; border-radius: 5px; font-size: 1.2rem; font-weight: bold; width: 40px; height: 40px; cursor: pointer; }
 .modal-zoom-controls button#zoom-reset-btn { width: auto; padding: 0 15px; }
-#modal-content-wrapper { width: 95vw; max-height: 85vh; /* FIX: Changed height to max-height */ overflow: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; display: flex; align-items: flex-start; }
-#modal-content { transform-origin: top left; transition: transform 0.2s ease-out; }
-.modal-screenshot { width: 100%; height: auto; } /* Image in modal will scale */
+#modal-content-wrapper { width: 95vw; max-height: 85vh; overflow: hidden; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+#modal-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.modal-screenshot { max-width: 100%; max-height: 100%; display: block; cursor: grab; }
+.modal-screenshot:active { cursor: grabbing; }
 
-/* --- MOBILE RESPONSIVE STYLES --- */
+/* --- ROBUST DESKTOP/MOBILE STYLES --- */
+
+/* By default, show the desktop calendar and hide the mobile one */
+#desktop-calendar-wrapper { display: block; }
+#mobile-calendar-wrapper { display: none; }
+
 @media (max-width: 991px) {
+    /* On small screens, hide the desktop calendar and show the mobile one */
+    #desktop-calendar-wrapper { display: none; }
+    #mobile-calendar-wrapper { display: block; }
+
     main, .main-header { padding: 0 10px; }
     .main-header h1 { font-size: 2rem; }
     .customization-panel { padding: 1.5em; }
@@ -82,12 +88,12 @@ h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); te
     .form-row { flex-direction: column; gap: 0; }
     .contact-links { flex-direction: column; gap: 10px; }
     
-    .mobile-preview {
+    #mobile-calendar-wrapper {
         position: relative;
         cursor: pointer;
         border: 3px solid var(--accent-gold);
         border-radius: 8px;
-        line-height: 0; /* Prevents extra space around the image */
+        line-height: 0;
     }
     .preview-screenshot {
         width: 100%;

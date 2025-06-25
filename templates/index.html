@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- NEW: Include the html2canvas library for taking screenshots -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
 </head>
 <body>
     <header class="main-header">
@@ -30,19 +30,17 @@
                     <button id="update-calendar-btn" class="cta-button">Update Calendar</button>
                     <button id="add-birthday-btn" class="secondary-button">Add Sample Birthday</button>
                 </div>
-                <!-- NEW: Updated button text -->
                 <button id="add-to-cart-btn" class="cta-button">Purchase - $39.99</button>
             </div>
         </div>
         <div id="calendar-display-area">
-            <!-- This container will hold either the full calendar (desktop) or the screenshot preview (mobile) -->
-            <div id="calendar-container"></div>
+            <!-- NEW: Separate containers for each view -->
+            <div id="desktop-calendar-wrapper"></div>
+            <div id="mobile-calendar-wrapper"></div>
         </div>
     </main>
 
-    <!-- NEW: This is a hidden container used only for rendering the full-size calendar to be screenshotted -->
     <div id="hidden-render-container"></div>
-    
     <div id="calendar-modal" class="modal-overlay">
         <button id="modal-close-btn" class="modal-close">×</button>
         <div class="modal-zoom-controls">
