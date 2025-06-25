@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Add the html2canvas library for taking screenshots -->
+    <!-- This library is required for the screenshot functionality -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
@@ -36,20 +36,18 @@
         </div>
 
         <div id="calendar-display-area">
-            <!-- This container will hold the visible preview calendar -->
+            <!-- This container will hold the preview screenshot and the button on mobile -->
             <div id="calendar-container"></div>
         </div>
     </main>
 
-    <!-- Modal structure for displaying the screenshot -->
+    <!-- Modal for displaying the full-size screenshot -->
     <div id="image-modal" class="modal-overlay">
         <button id="modal-close-btn" class="modal-close">×</button>
-        <div id="modal-content" class="modal-content">
-            <!-- The screenshot (<img> tag) will be placed here by JavaScript -->
-        </div>
+        <div id="modal-content" class="modal-content"></div>
     </div>
     
-    <!-- This is a hidden container for rendering the full-size calendar for the screenshot -->
+    <!-- Hidden container for rendering the full-size calendar to be screenshotted -->
     <div id="hidden-render-container"></div>
 
     <footer class="site-footer">
