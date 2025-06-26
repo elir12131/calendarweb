@@ -1,5 +1,46 @@
 /* static/css/style.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap');
+/* --- NEW: SITE NAVIGATION HEADER --- */
+.site-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-light-gray);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.nav-brand a {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--accent-burgundy);
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1.2; /* Add this line */
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+.nav-links a {
+    color: var(--text-charcoal);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.nav-links a:hover {
+    border-bottom-color: var(--accent-gold);
+}
+.nav-toggle {
+    display: none; /* Hidden on desktop */
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 :root { --bg-soft-cream: #FDF8F5;--text-charcoal: #333333;--accent-burgundy: #800020;--accent-gold: #C0A15E;--highlight-rose: #F9EAE5;--border-light-gray: #e0e0e0;--font-heading: 'Playfair+Display', serif;--font-body: 'Inter', sans-serif;--font-special: 'Pacifico', cursive; }
 body { background-color: var(--bg-soft-cream); color: var(--text-charcoal); font-family: var(--font-body); margin: 0; padding: 0; line-height: 1.6; }
 main { padding: 0 20px; }
@@ -116,5 +157,203 @@ h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); te
         text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         z-index: 10;
         white-space: nowrap;
+    }
+}
+
+/* --- NEW & IMPROVED: THANK YOU PAGE STYLES --- */
+.thank-you-container {
+    max-width: 600px;
+    margin: 3em auto;
+    text-align: center;
+    background: #fff;
+    padding: 3em;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--accent-gold);
+}
+.thank-you-icon-wrapper {
+    margin-bottom: 0.5em;
+}
+.thank-you-icon-wrapper .fa-check-circle {
+    font-size: 5rem;
+    color: #28a745;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.thank-you-container h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25em;
+}
+.confirmation-text {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto 2.5em auto;
+}
+.order-details-summary {
+    border: 1px solid var(--border-light-gray);
+    background-color: var(--bg-soft-cream);
+    border-radius: 8px;
+    padding: 1.5em;
+    margin: 2em 0;
+    text-align: center;
+}
+.order-details-summary p {
+    margin: 0.75em 0;
+    font-size: 1rem;
+}
+.back-home-btn {
+    margin-top: 1.5em;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+/* --- Mobile adjustments for the thank you page --- */
+@media (max-width: 768px) {
+    .thank-you-container {
+        padding: 2em 1.5em;
+        margin: 2em auto;
+    }
+    .thank-you-container h2 {
+        font-size: 2rem;
+    }
+}
+
+/* --- CHECKOUT & CART PAGE STYLES --- */
+.checkout-container {
+    max-width: 600px;
+    margin: 2em auto;
+    background: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.order-summary {
+    border-bottom: 1px solid var(--border-light-gray);
+    padding-bottom: 1.5em;
+    margin-bottom: 1.5em;
+}
+.summary-item, .summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+.summary-total {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 1em;
+}
+.payment-form h2 {
+    margin-bottom: 1em;
+}
+.form-group {
+    margin-bottom: 1.5em;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-light-gray);
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+.pay-button {
+    width: 100%;
+    margin-top: 1em;
+}
+
+/* --- CART SPECIFIC STYLES --- */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 1.5em;
+    margin-bottom: 1.5em;
+    border-bottom: 1px solid var(--border-light-gray);
+}
+.item-details .item-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0;
+}
+.item-details .item-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.5em 0;
+}
+.zipcode-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0.5em 0 0 0;
+    color: #333;
+}
+.item-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 2em;
+}
+
+/* --- THANK YOU PAGE STYLES --- */
+.thank-you-container {
+    max-width: 650px;
+    margin: 4em auto;
+    text-align: center;
+    background: #fff;
+    padding: 3em 2em;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--accent-gold);
+}
+.thank-you-icon-wrapper {
+    margin-bottom: 1em;
+}
+.thank-you-icon-wrapper .fa-check-circle {
+    font-size: 5rem;
+    color: #28a745;
+}
+.thank-you-container h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5em;
+}
+.confirmation-text {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto 2em auto;
+}
+.order-details-summary {
+    border-top: 1px solid var(--border-light-gray);
+    border-bottom: 1px solid var(--border-light-gray);
+    padding: 1.5em 0;
+    margin: 2em 0;
+    text-align: center;
+}
+.order-details-summary p {
+    margin: 0.5em 0;
+}
+.back-home-btn {
+    margin-top: 1em;
+}
+
+/* --- Add this inside the main mobile media query --- */
+@media (max-width: 991px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .checkout-container {
+        padding: 1.5em;
     }
 }
