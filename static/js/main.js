@@ -140,7 +140,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBtn.addEventListener('click', fetchAndRenderAll);
     addZipBtn.addEventListener('click', () => addZipcodeField());
     addBirthdayBtn.addEventListener('click', addSampleBirthday);
-    purchaseBtn.addEventListener('click', () => { window.location.href = '/checkout'; });
+    purchaseBtn.addEventListener('click', () => {
+    // Find all unique, non-empty zipcodes from the input fields
+    const zipInputs = document.querySelectorAll('.zip-input');
+    const zipcodes = [...new Set(Array.from(zipInputs).map(input => input.value.trim()).filter(Boolean))];
+    
+    // Save the list of zipcodes to the browser's session storage
+    sessionStorage.setItem('calendar_zipcodes', JSON.stringify(zipcodes));
+    
+    // Navigate to the new cart page
+    window.location.href = '/cart';
+    });
 
     addZipcodeField();
     fetchAndRenderAll();

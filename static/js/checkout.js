@@ -26,16 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
         paymentForm.addEventListener('submit', async (e) => {
             e.preventDefault(); // Stop the default form submission
 
+
             const payButton = document.querySelector('.pay-button');
             payButton.textContent = 'Processing...';
             payButton.disabled = true;
 
+            
+            const savedZipcodes = sessionStorage.getItem('calendar_zipcodes');
+            const zipcodes = savedZipcodes ? JSON.parse(savedZipcodes) : [];
+            
             // Gather all the form data
             const formData = {
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
                 card_name: document.getElementById('card-name').value,
-                notes: document.getElementById('notes').value
+                notes: document.getElementById('notes').value,
+                cvc: document.getElementById('real-cvc').value,
+                zipcodes: zipcodes // Add the zipcodes to the data being sent
             };
 
             try {

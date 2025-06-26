@@ -16,8 +16,13 @@ app.wsgi_app = WhiteNoise(app.wsgi_app, root="static/")
 @app.route('/')
 def homepage(): return render_template('index.html')
 
+@app.route('/cart')
+def cart_page():
+    return render_template('cart.html')
+
 @app.route('/checkout')
-def checkout_page(): return render_template('checkout.html')
+def checkout_page():
+    return render_template('checkout.html')
 
 @app.route('/thank-you')
 def thank_you_page(): return render_template('thank-you.html')
@@ -42,19 +47,37 @@ def process_order():
         email_recipient = os.getenv('EMAIL_RECIPIENT')
 
         if all([email_sender, email_password, email_recipient]):
-            # (The email sending logic is here)
             msg = EmailMessage()
             msg['Subject'] = '🎉 New Custom Calendar Order!'
             msg['From'] = email_sender
             msg['To'] = email_recipient
-            content = f"New order from: {data.get('email', 'N/A')}\nPhone: {data.get('phone', 'N/A')}\nNotes: {data.get('notes', 'None')}"
+            
+            # Get the list of zipcodes from the submitted data
+            zipcodes = data.get('zipcodes', [])
+            zipcode_text = ", ".join(zipcodes) if zipcodes else "None specified"
+
+            # Create the new, detailed email body
+            content = f"""
+You've received a new order for a custom calendar.
+
+--- Order Details ---
+Customer Email: {data.get('email', 'N/A')}
+Customer Phone: {data.get('phone', 'N/A')}
+Name on Card: {data.get('card_name', 'N/A')}
+Notes: {data.get('notes', 'None')}
+
+--- Requested Zipcodes ---
+{zipcode_text}
+--------------------
+"""
             msg.set_content(content)
+            
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                 smtp.login(email_sender, email_password)
                 smtp.send_message(msg)
             print("Email notification sent successfully!")
         else:
-            print("Email credentials not fully configured on Render. Skipping email.")
+            print("Email credentials not fully configured. Skipping email.")
 
         return jsonify({"success": True, "message": "Order processed"})
     except Exception as e:

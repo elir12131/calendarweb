@@ -1,45 +1,5 @@
 /* static/css/style.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Pacifico&display=swap');
-/* --- NEW: SITE NAVIGATION HEADER --- */
-.site-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    border-bottom: 1px solid var(--border-light-gray);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-.nav-brand a {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    color: var(--accent-burgundy);
-    text-decoration: none;
-    font-weight: bold;
-}
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-.nav-links a {
-    color: var(--text-charcoal);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.3s ease;
-}
-.nav-links a:hover {
-    border-bottom-color: var(--accent-gold);
-}
-.nav-toggle {
-    display: none; /* Hidden on desktop */
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
 :root { --bg-soft-cream: #FDF8F5;--text-charcoal: #333333;--accent-burgundy: #800020;--accent-gold: #C0A15E;--highlight-rose: #F9EAE5;--border-light-gray: #e0e0e0;--font-heading: 'Playfair+Display', serif;--font-body: 'Inter', sans-serif;--font-special: 'Pacifico', cursive; }
 body { background-color: var(--bg-soft-cream); color: var(--text-charcoal); font-family: var(--font-body); margin: 0; padding: 0; line-height: 1.6; }
 main { padding: 0 20px; }
@@ -156,65 +116,5 @@ h1, h2, h3 { font-family: var(--font-heading); color: var(--accent-burgundy); te
         text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         z-index: 10;
         white-space: nowrap;
-    }
-}
-
-/* --- NEW & IMPROVED: THANK YOU PAGE STYLES --- */
-.thank-you-container {
-    max-width: 600px;
-    margin: 3em auto;
-    text-align: center;
-    background: #fff;
-    padding: 3em;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    border-top: 5px solid var(--accent-gold);
-}
-.thank-you-icon-wrapper {
-    margin-bottom: 0.5em;
-}
-.thank-you-icon-wrapper .fa-check-circle {
-    font-size: 5rem;
-    color: #28a745;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.thank-you-container h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.25em;
-}
-.confirmation-text {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.6;
-    max-width: 480px;
-    margin: 0 auto 2.5em auto;
-}
-.order-details-summary {
-    border: 1px solid var(--border-light-gray);
-    background-color: var(--bg-soft-cream);
-    border-radius: 8px;
-    padding: 1.5em;
-    margin: 2em 0;
-    text-align: center;
-}
-.order-details-summary p {
-    margin: 0.75em 0;
-    font-size: 1rem;
-}
-.back-home-btn {
-    margin-top: 1.5em;
-    padding: 15px 40px;
-    font-size: 1.1rem;
-}
-
-/* --- Mobile adjustments for the thank you page --- */
-@media (max-width: 768px) {
-    .thank-you-container {
-        padding: 2em 1.5em;
-        margin: 2em auto;
-    }
-    .thank-you-container h2 {
-        font-size: 2rem;
     }
 }
